@@ -1,30 +1,29 @@
-CREATE TABLE Department (
-    DepartmentID INT PRIMARY KEY,
-    DepartmentName VARCHAR(50)
-);
+DEPARTMENT ||--o{ STUDENT : "has"  
+FACULTY ||--o{ COURSE : "handles"  
+STUDENT }o--o{ COURSE : "enrolls"  
 
-CREATE TABLE Student (
-    StudentID INT PRIMARY KEY,
-    StudentName VARCHAR(50),
-    DepartmentID INT,
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
-);
+DEPARTMENT {  
+    int DepartmentID PK  
+    string DepartmentName  
+}  
 
-CREATE TABLE Faculty (
-    FacultyID INT PRIMARY KEY,
-    FacultyName VARCHAR(50),
-    DepartmentID INT,
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
-);
+STUDENT {  
+    int StudentID PK  
+    string StudentName  
+    int DepartmentID FK  
+}  
 
-CREATE TABLE Course (
-    CourseID INT PRIMARY KEY,
-    CourseName VARCHAR(50),
-    DepartmentID INT,
-    FacultyID INT,
-    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID),
-    FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID)
-);
+FACULTY {  
+    int FacultyID PK  
+    string FacultyName  
+    string Designation  
+}  
+
+COURSE {  
+    int CourseID PK  
+    string CourseName  
+    int FacultyID FK  
+}
              ┌──────────────┐
              │  Department  │
              │──────────────│
