@@ -1,26 +1,54 @@
-LAB PROGRAM 12 - ER DIAGRAM CHECKLIST
+CREATE TABLE Department (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(50)
+);
 
-Student Entity: YES
-Course Entity: YES
-Faculty Entity: YES
-Department Entity: YES
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    StudentName VARCHAR(50),
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+);
 
-Student Primary Key: StudentID
-Course Primary Key: CourseID
-Faculty Primary Key: FacultyID
-Department Primary Key: DepartmentID
+CREATE TABLE Faculty (
+    FacultyID INT PRIMARY KEY,
+    FacultyName VARCHAR(50),
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+);
 
-Department-Student Relationship: YES
-Department-Student Cardinality: 1:N
+CREATE TABLE Course (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(50),
+    DepartmentID INT,
+    FacultyID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID),
+    FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID)
+);
+             ┌──────────────┐
+             │  Department  │
+             │──────────────│
+             │ DepartmentID │
+             │ DepartmentName│
+             └──────┬───────┘
+                    │
+          ┌─────────┴─────────┐
+          │                   │
+          │                   │
+   ┌──────▼──────┐     ┌──────▼──────┐
+   │   Student   │     │   Faculty   │
+   │─────────────│     │─────────────│
+   │ StudentID   │     │ FacultyID   │
+   │ StudentName │     │ FacultyName │
+   │ DepartmentID│     │ DepartmentID│
+   └─────────────┘     └──────┬──────┘
+                              │
+                       ┌──────▼──────┐
+                       │   Course    │
+                       │─────────────│
+                       │ CourseID    │
+                       │ CourseName  │
+                       │ DepartmentID│
+                       │ FacultyID   │
+                       └─────────────┘
 
-Faculty-Course Relationship: YES
-Faculty-Course Cardinality: 1:N
-
-Student-Course Relationship: YES
-Student-Course Cardinality: M:N
-
-Associative Entity for Student-Course: Enrollment
-
-One-to-One Relationship: NOT REQUIRED
-
-Visual Diagram Created in MySQL Workbench: YES
